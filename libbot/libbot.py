@@ -2,7 +2,6 @@
 import bot_conf
 import telebot
 from telebot import types
-from random import randint
 import string
 import logging
 import time
