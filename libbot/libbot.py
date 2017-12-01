@@ -38,7 +38,7 @@ def send_welcome(message):
                 conn.commit()
                 logging.info(u'New user user_id:'+str(message.chat.id)+' username (first_name):'+message.chat.first_name
                              + u'('+message.chat.first_name + u') BL=' + str(bl.get(message.chat.id)))
-                bot.send_message(message.chat.id, u'Привет! Добро пожаловать в библиотеку Информзащиты')
+                bot.send_message(message.chat.id, u'Привет! Добро пожаловать в библиотеку')
             else: # user
                 bot.send_message(message.chat.id, u'%s, рады видеть Вас снова! 😊' % row[2])
                 logging.info(u'Command restart user_id:' + str(message.chat.id) + u'('+message.chat.first_name + u') BL=' + str(bl.get(message.chat.id)))
@@ -184,7 +184,7 @@ def handler_get_list(message):
 @bot.message_handler(regexp='^ℹO нaс')
 def handler_about_us(message):
     logging.info(u'Command O_NAS user_id:' + str(message.chat.id) + u'('+message.chat.first_name+u') BL=' + str(bl.get(message.chat.id)))
-    bot.send_message(message.chat.id,text=u'[Правила пользования - Ботом библиотеки ИЗ](http://telegra.ph/Biblioteka-IZ-11-16)',parse_mode="Markdown")
+    bot.send_message(message.chat.id,text=u'[Правила пользования - Ботом библиотеки]()',parse_mode="Markdown")
     main_menu(message, False, True)
 
 
@@ -196,8 +196,6 @@ def handler_get_list(message):
     bl[message.chat.id]=1
 
     try:
-        # fix it in config
-#        conn = mysql.connector.connect(host=bot_conf.h,port=bot_conf.p,database=bot_conf.d,user=bot_conf.u,password=bot_conf.p)
         conn = mysql.connector.connect()
         if conn.is_connected():
             cursor = conn.cursor(buffered=True)
@@ -259,9 +257,9 @@ def take_book(message):
             cursor.execute("SELECT book_name,book_writer,book_stat,book_reader FROM book WHERE book_name LIKE '%s%s%s' LIMIT 0,5;" % ("%", message.text, "%"))
             row = cursor.fetchone()
             if row is None:
-                bot.send_message(message.chat.id, text=u'Хм, похоже, такой книги у нас нет. Пожалуйста, обратитесь к администратору: @sergioaldia')
+                bot.send_message(message.chat.id, text=u'Хм, похоже, такой книги у нас нет. Пожалуйста, обратитесь к администратору')
                 logging.info(u'Command VZYAT_INLINE lev=2 user_id:' + str(message.chat.id) + u'('+message.chat.first_name+u') BL=' + str(bl.get(message.chat.id))
-                             +u'Хм, похоже, такой книги у нас нет. Пожалуйста, обратитесь к администратору: @sergioaldia')
+                             +u'Хм, похоже, такой книги у нас нет. Пожалуйста, обратитесь к администратору')
             else:
                 if (row[2] == 2) and (row[3] != message.chat.id):
                     # request
@@ -273,9 +271,9 @@ def take_book(message):
                         logging.info(u'Command VZYAT_INLINE lev=2 user_id:' + str(message.chat.id) + u'(' + message.chat.first_name + u') BL=' + str(bl.get(message.chat.id))
                                 + u'Упс! Похоже, предыдущий читатель не отметил возврат книги. Пожалуйста, попросите его об этом: @'+str(row1[0]))
                     else:
-                        bot.send_message(message.chat.id,text=u'Упс! Похоже произошла ошибка! Обратитесь к администратору @sergioaldia')
+                        bot.send_message(message.chat.id,text=u'Упс! Похоже произошла ошибка! Обратитесь к администратору')
                         logging.info(u'Command VZYAT_INLINE lev=2 user_id:' + str(message.chat.id) + u'(' + message.chat.first_name + u') BL=' +
-                                     str(bl.get(message.chat.id)) + u'Упс! Похоже произошла ошибка! Обратитесь к администратору @sergioaldia')
+                                     str(bl.get(message.chat.id)) + u'Упс! Похоже произошла ошибка! Обратитесь к администратору')
                 else:
                     i=1
                     while (i<6) and (row is not None):
@@ -296,13 +294,13 @@ def take_book(message):
 # button "Добавить книгу"
 @bot.message_handler(regexp='^✅Дoбавить книгу')
 def handler_about_us(message):
-    bot.send_message(message.chat.id,text=u'Данный функционал в разработке. Для добавления книги в бибилотеку обратитесь к администратору: @sergioaldia')
+    bot.send_message(message.chat.id,text=u'Данный функционал в разработке. Для добавления книги в бибилотеку обратитесь к администратору')
     main_menu(message, False, True)
 
 # button "Написать нам"
 @bot.message_handler(regexp='^✉Нaпиcать нaм')
 def handler_about_us(message):
-    bot.send_message(message.chat.id,text=u'Данный функционал в разработке. Для добавления книги в бибилотеку обратитесь к администратору: @sergioaldia')
+    bot.send_message(message.chat.id,text=u'Данный функционал в разработке. Для добавления книги в бибилотеку обратитесь к администратору')
     main_menu(message, False, True)
 
 if __name__ == '__main__':
