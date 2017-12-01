@@ -24,11 +24,7 @@ def send_welcome(message):
     if bl.get(message.chat.id) == 1: return
     bl[message.chat.id]=1
     try:
-        conn = mysql.connector.connect(host='localhost',
-                                       port='3306',
-                                       database='tlg_librarybot',
-                                       user='librarybot',
-                                       password='12345Lib')
+        conn = mysql.connector.connect()
         if conn.is_connected():
             chatID = message.chat.id
             cursor = conn.cursor()
@@ -62,11 +58,7 @@ def inline(call):
     if call.data == "take_book":
         try:
             logging.info(u'Command VZYAT_INLINE user_id:' + str(call.message.chat.id) + u'(' + call.message.chat.first_name + u') BL=' + str(bl.get(call.message.chat.id)))
-            conn = mysql.connector.connect(host='localhost',
-                                           port='3306',
-                                           database='tlg_librarybot',
-                                           user='librarybot',
-                                           password='12345Lib')
+            conn = mysql.connector.connect()
             if conn.is_connected():
                 haha = call.message.text
                 cursor = conn.cursor()
@@ -119,11 +111,7 @@ def inline(call):
     if call.data == "takeoff_book":
         logging.info(u'Command VERNUT_INLINE user_id:' + str(call.message.chat.id) + u'(' + call.message.chat.first_name + u') BL=' + str(bl.get(call.message.chat.id)))
         try:
-            conn = mysql.connector.connect(host='localhost',
-                                           port='3306',
-                                           database='tlg_librarybot',
-                                           user='librarybot',
-                                           password='12345Lib')
+            conn = mysql.connector.connect()
             if conn.is_connected():
                 haha = call.message.text
                 cursor = conn.cursor()
@@ -210,11 +198,7 @@ def handler_get_list(message):
     try:
         # fix it in config
 #        conn = mysql.connector.connect(host=bot_conf.h,port=bot_conf.p,database=bot_conf.d,user=bot_conf.u,password=bot_conf.p)
-        conn = mysql.connector.connect(host='localhost',
-                                       port='3306',
-                                       database='tlg_librarybot',
-                                       user='librarybot',
-                                       password='12345Lib')
+        conn = mysql.connector.connect()
         if conn.is_connected():
             cursor = conn.cursor(buffered=True)
             cursor.execute("SELECT book_name,book_writer,book_date,book_stat,book_reader FROM book WHERE book_reader=%s;" % message.chat.id)
@@ -268,11 +252,7 @@ def handler_take_book(message):
 
 def take_book(message):
     try:
-        conn = mysql.connector.connect(host='localhost',
-                                       port='3306',
-                                       database='tlg_librarybot',
-                                       user='librarybot',
-                                       password='12345Lib')
+        conn = mysql.connector.connect()
         if conn.is_connected():
             cursor = conn.cursor(buffered=True)
             # first 5 books
